@@ -1,6 +1,6 @@
 import express from "express";
 import {get, merge} from "lodash";
-import { UserModel } from "models/User";
+import { UserModel } from "../models/User";
 
 export const checkAuth = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try{
@@ -10,7 +10,7 @@ export const checkAuth = async (req: express.Request, res: express.Response, nex
       return res.status(400).json({message: "You are not logged in"});
     }
 
-    const existingUser = await UserModel.findOne({authentication: {sessionToken}});
+    const existingUser = await UserModel.findOne({'authentication.sessionToken': sessionToken});
 
     if (!existingUser) {
       return res.status(400).json({message: "You are not logged in"});
