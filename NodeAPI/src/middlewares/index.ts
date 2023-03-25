@@ -16,7 +16,7 @@ export const checkAuth = async (req: express.Request, res: express.Response, nex
       return res.status(400).json({message: "You are not logged in"});
     }
 
-    merge(req, {identity: existingUser});
+    merge(req.body, {identity: existingUser._id});
     return next();
   } catch (err) {
     console.log(err);

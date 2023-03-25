@@ -93,3 +93,26 @@ export const getOneUser = async (req: express.Request, res: express.Response) =>
     res.status(500).json({message: "Unable to open users"});
   }
 }
+
+export const changePassword = async (req: express.Request, res: express.Response) => {
+  try {
+    const userID = req.body.identity;
+    const {oldPassword, newPassword} = req.body;
+    if (!oldPassword || !newPassword){
+      return res.status(400).json({message: "Uncorrect format"});
+    }
+
+    const currUser = await UserModel.findOne({_id: userID}).select('+authentication.salt +authentication.password');;
+    
+    if (authentication(currUser.authentication.salt, oldPassword) !== currUser.authentication.password){
+      return res.status(400).json({message: "Not correct old password"});
+    }
+
+    await UserModel.findOneAndUpdate({_id: userID}, {'authentication.password': authentication(currUser.authentication.salt, newPassword)});
+
+    return res.json({message: "success"}).end();
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({message: "Unable to register"});
+  }
+}
