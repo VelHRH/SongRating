@@ -21,7 +21,7 @@ const Menu = () => {
      pathname.includes("/authors") && "bg-blue-900"
     } w-full h-full hover:bg-blue-900 flex items-center justify-center duration-300`}
    >
-    users
+    artists
    </a>
    <a
     href="/users"
