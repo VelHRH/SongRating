@@ -2,7 +2,7 @@
 
 namespace SongRating.Core
 {
-    interface ISongServices
+    public interface ISongServices
     {
         List<Song> GetSongs();
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SongRating.Core;
 using SongRating.WebApi.Models;
 using System;
 using System.Collections.Generic;
@@ -13,14 +14,16 @@ namespace SongRating.WebApi.Controllers
     [Route("[controller]")]
     public class SongsController : Controller
     {
-        public SongsController()
+        public readonly ISongServices _songServices;
+        public SongsController(ISongServices songServices)
         {
+            _songServices = songServices;
         }
 
         [HttpGet]
         public IActionResult GetSongs()
         {
-
+            return Ok(_songServices.GetSongs());
         }
     }
 }

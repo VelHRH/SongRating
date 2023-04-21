@@ -1,0 +1,12 @@
+C:\Users\admin\source\repos\SongRating\SongRating.Core\bin\Debug\net5.0\SongRating.Core.deps.json
+C:\Users\admin\source\repos\SongRating\SongRating.Core\bin\Debug\net5.0\SongRating.Core.dll
+C:\Users\admin\source\repos\SongRating\SongRating.Core\bin\Debug\net5.0\ref\SongRating.Core.dll
+C:\Users\admin\source\repos\SongRating\SongRating.Core\bin\Debug\net5.0\SongRating.Core.pdb
+C:\Users\admin\source\repos\SongRating\SongRating.Core\obj\Debug\net5.0\SongRating.Core.csprojAssemblyReference.cache
+C:\Users\admin\source\repos\SongRating\SongRating.Core\obj\Debug\net5.0\SongRating.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\admin\source\repos\SongRating\SongRating.Core\obj\Debug\net5.0\SongRating.Core.AssemblyInfoInputs.cache
+C:\Users\admin\source\repos\SongRating\SongRating.Core\obj\Debug\net5.0\SongRating.Core.AssemblyInfo.cs
+C:\Users\admin\source\repos\SongRating\SongRating.Core\obj\Debug\net5.0\SongRating.Core.csproj.CoreCompileInputs.cache
+C:\Users\admin\source\repos\SongRating\SongRating.Core\obj\Debug\net5.0\SongRating.Core.dll
+C:\Users\admin\source\repos\SongRating\SongRating.Core\obj\Debug\net5.0\ref\SongRating.Core.dll
+C:\Users\admin\source\repos\SongRating\SongRating.Core\obj\Debug\net5.0\SongRating.Core.pdb
