@@ -2,7 +2,10 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { Kanit } from "next/font/google";
+
 config.autoAddCss = false;
+const kanit = Kanit({ weight: "400", subsets: ["latin"] });
 
 export const metadata = {
  title: "Create Next App",
@@ -16,7 +19,9 @@ export default function RootLayout({
 }) {
  return (
   <html lang="en">
-   <body className="bg-slate-100 dark:bg-slate-900 text-slate-950 dark:text-slate-50">
+   <body
+    className={`${kanit.className}bg-slate-100 dark:bg-slate-900 text-slate-950 dark:text-slate-50`}
+   >
     <div className="w-[70%] ml-[50%] translate-x-[-50%] py-5">
      <Navbar />
      {children}
