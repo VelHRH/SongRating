@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import express from "express";
 import { SongModel } from "../models/Song";
 
@@ -48,11 +50,40 @@ export const deleteSong = async (req: express.Request, res: express.Response) =>
 
 export const findById = async (req: express.Request, res: express.Response) => {
   try{
-    const {addedBy} = req.body;
+    const addedBy = req.params.id;
     if (!addedBy){
       return res.status(400).json({message: "Uncorrect format"});
     }
     const songs = await SongModel.find({addedBy});
+    return res.json(songs).end();
+  } catch (err){
+    console.log(err);
+    return res.status(500).json({message: "Error with creation"});
+  }
+}
+const findAvg = (arr: {userID: string, star: number}[]) =>{
+  let avg=0;
+  for (let i=0; i<arr.length; i++){
+    avg+=arr[i].star;
+  }
+  return avg/arr.length;
+}
+export const getAll = async (req: express.Request, res: express.Response) => {
+  try{
+    const songs = await SongModel.find();
+    for (let i = 0; i < songs.length; i++) {
+      songs[i] = {...songs[i]._doc, avg: findAvg(songs[i].ratings)};
+    }
+    console.log(songs);
+    for (let i = 0; i < songs.length; i++) {
+      for (let j=i+1; j<songs.length; j++){
+        if (songs[j].avg > songs[i].avg){
+          const t = songs[j];
+          songs[j] = songs[i];
+          songs[i] = t;
+        }
+      }
+    }
     return res.json(songs).end();
   } catch (err){
     console.log(err);
