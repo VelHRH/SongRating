@@ -4,7 +4,7 @@ import Menu from "./menu";
 
 const Navbar = () => {
  return (
-  <div className="w-full h-16 flex justify-between items-center text-6xl">
+  <div className="w-full h-16 flex justify-between items-center text-6xl mb-5">
    <Logo />
    <Menu />
    <Login />
