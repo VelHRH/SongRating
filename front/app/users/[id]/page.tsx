@@ -14,7 +14,7 @@ export default async function Home({ params }: { params: { id: string } }) {
   <main className={``}>
    {songs.map((song) => (
     <Link key={song._id} href={`/song/${song._id}`}>
-     <Song rating={song.ratings[0].star}>
+     <Song rating={song.ratings[0]?.star}>
       {song.name} - {song.author[0]}
      </Song>
     </Link>
