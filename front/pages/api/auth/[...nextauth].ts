@@ -29,10 +29,20 @@ export const authOptions: NextAuthOptions = {
       }
     })
   ],
+  session:{
 
-  session: {
-    strategy: 'jwt'
-  }, 
+    strategy: "jwt",
+    
+    },
+  callbacks: {
+    async jwt({token, user}){
+      return {...token, ...user};
+    },
+    async session({session, token}){
+      session.user = token;
+      return session;
+    }
+  },
 
   pages: {
     signIn: '/users/login',

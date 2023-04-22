@@ -6,6 +6,7 @@ import { signIn, signOut } from "next-auth/react";
 
 const Login = () => {
  const { data: session } = useSession();
+ console.log(session);
  return session?.user?.email ? (
   <div className="flex">
    <Link
