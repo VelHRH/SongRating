@@ -6,12 +6,14 @@ import { signIn, signOut } from "next-auth/react";
 
 const Login = () => {
  const { data: session } = useSession();
- console.log(session);
  return session?.user?.email ? (
   <div className="flex">
-   <button className="bg-blue-600 text-white px-2 font-bold text-2xl hover:scale-105 duration-300 mr-3 rounded-full aspect-square">
+   <Link
+    href="/song/add"
+    className="bg-blue-600 text-white px-2 flex items-center font-bold text-2xl hover:scale-105 duration-300 mr-3 rounded-full aspect-square"
+   >
     Add
-   </button>
+   </Link>
    <button
     onClick={() => signOut()}
     className="text-2xl cursor-pointer hover:underline duration-200"
