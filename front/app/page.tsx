@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 async function getData(token) {
  const res = await fetch(`${process.env.API_HOST}/song/getAll`, {
@@ -22,7 +23,6 @@ async function getData(token) {
 export default async function Home() {
  const session = await getServerSession(authOptions);
  const songs = await getData(session?.user?.sessionToken || "");
- console.log(session);
  if (songs.message) {
   redirect("/users/login");
  }

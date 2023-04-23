@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 
 const Home = ({ params }: { params: { id: string } }) => {
  const session = useSession();
- if (session.user) {
+ if (session.data?.user || session.user) {
   signOut();
  }
  return (
