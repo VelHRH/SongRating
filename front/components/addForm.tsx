@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 async function addSong(token, name, authors, url, mins, secs) {
- await fetch(`http://localhost:4444/song/add`, {
+ const res = await fetch(`http://localhost:4444/song/add`, {
   method: "POST",
   headers: {
    "Content-Type": "application/json;charset=utf-8",
@@ -16,9 +17,12 @@ async function addSong(token, name, authors, url, mins, secs) {
    length: `${mins}:${secs}`,
   }),
  });
+ const data = res.json();
+ return data;
 }
 
 const AddForm = () => {
+ const router = useRouter();
  const session = useSession();
  const [name, seName] = useState("");
  const [authors, setAuthors] = useState("");
@@ -27,7 +31,7 @@ const AddForm = () => {
  const [secs, setSecs] = useState(0);
  const handleSubmit = async (e) => {
   e.preventDefault();
-  await addSong(
+  const res = await addSong(
    session.data?.user?.sessionToken,
    name,
    authors,
@@ -35,6 +39,7 @@ const AddForm = () => {
    mins,
    secs
   );
+  if (res && !res.message) router.push("/");
  };
  return (
   <form onSubmit={handleSubmit} className="w-[70%] flex flex-col items-center">

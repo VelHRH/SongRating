@@ -5,7 +5,6 @@ import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
-import { useSession } from "next-auth/react";
 
 async function getData(token) {
  const res = await fetch(`${process.env.API_HOST}/song/getAll`, {
@@ -31,7 +30,7 @@ export default async function Home() {
    {songs.map((song) => (
     <Link key={song._id} href={`/song/${song._id}`}>
      <Song rating={song.avg}>
-      {song.name} - {song.author[0]}
+      {song.name} - {song.author.join(", ")}
      </Song>
     </Link>
    ))}

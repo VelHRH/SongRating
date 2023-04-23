@@ -3,12 +3,66 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
-const Stars = () => {
+async function rateSong(token, id, star) {
+ console.log(
+  JSON.stringify({
+   star: star,
+  })
+ );
+ const res = await fetch(`http://localhost:4444/song/rate/${id}`, {
+  method: "POST",
+  headers: {
+   "Content-Type": "application/json;charset=utf-8",
+   Authorization: `${token}`,
+  },
+  body: JSON.stringify({
+   star,
+  }),
+ });
+ const data = res.json();
+ return data;
+}
+
+async function deleteRating(token, id) {
+ const res = await fetch(`http://localhost:4444/song/rate/${id}`, {
+  method: "DELETE",
+  headers: {
+   "Content-Type": "application/json;charset=utf-8",
+   Authorization: `${token}`,
+  },
+ });
+ const data = res.json();
+ return data;
+}
+
+const Stars = ({ defaultRating }) => {
+ const session = useSession();
+ const pathname = usePathname();
  const [curHover, SetCurHover] = useState(0);
- const [rating, setRating] = useState(0);
- const handleClick = (r: number) => {
-  (rating === 0 || r === 0) && setRating(r);
+ const [rating, setRating] = useState(defaultRating);
+ const handleClick = async (r: number) => {
+  if (rating === 0 || r === 0) {
+   setRating(r);
+  }
+  console.log(r);
+  if (r === 0) {
+   const res = await deleteRating(
+    session.data?.user.sessionToken,
+    pathname?.slice(pathname.indexOf("g/") + 2)
+   );
+   if (res.message) {
+    setRating(0);
+   }
+  } else {
+   const res = await rateSong(
+    session.data?.user.sessionToken,
+    pathname?.slice(pathname.indexOf("g/") + 2),
+    r
+   );
+  }
  };
  return (
   <div className="w-full flex flex-col items-center">
