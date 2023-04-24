@@ -35,7 +35,7 @@ export default async function Home({ params }: { params: { id: string } }) {
    />
    <Stars
     defaultRating={
-     song.ratings.find((r) => r.userID === session?.user?._id).star || 0
+     song.ratings.find((r) => r.userID === session?.user?._id)?.star || 0
     }
    />
   </main>

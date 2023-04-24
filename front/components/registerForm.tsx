@@ -1,26 +1,32 @@
 "use client";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { signOut } from "next-auth/react";
-import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-const LoginForm = () => {
+async function register(login, email, password) {
+ const res = await fetch(`http://localhost:4444/user/register`, {
+  method: "POST",
+  headers: {
+   "Content-Type": "application/json;charset=utf-8",
+  },
+  body: JSON.stringify({
+   email,
+   login,
+   password,
+  }),
+ });
+ const data = res.json();
+ return data;
+}
+
+const RegisterForm = () => {
+ const router = useRouter();
  const [email, setEmail] = useState("");
+ const [login, setLogin] = useState("");
  const [pass, setPass] = useState("");
-
- const session = useSession();
- if (session.data?.user || session.user) {
-  signOut();
- }
-
  const handleSubmit = async (e) => {
   e.preventDefault();
-  await signIn("credentials", {
-   username: email,
-   password: pass,
-   redirect: true,
-   callbackUrl: "/",
-  });
+  const res = await register(login, email, pass);
+  if (!res.message) router.push("/users/login");
  };
  return (
   <form onSubmit={handleSubmit} className="w-[70%] flex flex-col items-center">
@@ -29,6 +35,13 @@ const LoginForm = () => {
     value={email}
     onChange={(e) => setEmail(e.target.value)}
     placeholder="Email"
+    className="bg-transparent w-full border-4 border-blue-600 text-white outline-none p-2 text-xl mb-5"
+   />
+   <input
+    type="text"
+    value={login}
+    onChange={(e) => setLogin(e.target.value)}
+    placeholder="Login"
     className="bg-transparent w-full border-4 border-blue-600 text-white outline-none p-2 text-xl mb-5"
    />
    <input
@@ -48,4 +61,4 @@ const LoginForm = () => {
  );
 };
 
-export default LoginForm;
+export default RegisterForm;

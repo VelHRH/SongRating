@@ -7,11 +7,6 @@ import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 async function rateSong(token, id, star) {
- console.log(
-  JSON.stringify({
-   star: star,
-  })
- );
  const res = await fetch(`http://localhost:4444/song/rate/${id}`, {
   method: "POST",
   headers: {
@@ -47,7 +42,6 @@ const Stars = ({ defaultRating }) => {
   if (rating === 0 || r === 0) {
    setRating(r);
   }
-  console.log(r);
   if (r === 0) {
    const res = await deleteRating(
     session.data?.user.sessionToken,
@@ -57,7 +51,7 @@ const Stars = ({ defaultRating }) => {
     setRating(0);
    }
   } else {
-   const res = await rateSong(
+   await rateSong(
     session.data?.user.sessionToken,
     pathname?.slice(pathname.indexOf("g/") + 2),
     r
