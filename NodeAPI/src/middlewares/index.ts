@@ -4,7 +4,7 @@ import { UserModel } from "../models/User";
 
 export const checkAuth = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   try{
-    const sessionToken = req.cookies['COOKIE_AUTH'];
+    const sessionToken = (req.headers.authorization || "").replace(/Bearer\s?/, '');
 
     if (!sessionToken) {
       return res.status(400).json({message: "You are not logged in"});

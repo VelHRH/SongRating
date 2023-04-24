@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { UserModel } from "../models/User";
 import express from "express";
-import { random, authentication } from "../helpers/index";
+import { random, authenticationCreate } from "../helpers/index";
 
 export const getUsers = async (req: express.Request, res: express.Response) => {
   try {
@@ -30,7 +31,7 @@ export const register = async (req: express.Request, res: express.Response) => {
       login,
       authentication:{
         salt,
-        password: authentication(salt, password)
+        password: authenticationCreate(salt, password)
       }
     })
     const user = await doc.save();
@@ -52,19 +53,17 @@ export const login = async (req: express.Request, res: express.Response) => {
 
     const user = await UserModel.findOne({email: email}).select('+authentication.salt +authentication.password');
 
-    const expectedHash = authentication(user.authentication.salt, password);
+    const expectedHash = authenticationCreate(user.authentication.salt, password);
 
     if (user.authentication.password !== expectedHash){
       return res.status(403).json({message: "Uncorrect email or password"});
     }
 
     const salt = random();
-    user.authentication.sessionToken = authentication(salt, user._id.toString());
+    user.authentication.sessionToken = authenticationCreate(salt, user._id.toString());
     await user.save();
-
-    res.cookie('COOKIE_AUTH', user.authentication.sessionToken, {domain: 'localhost', path: '/'});
-
-    return res.json(user).end();
+    const {authentication, ...userClear} = user._doc;
+    return res.json({...userClear, sessionToken: user.authentication.sessionToken}).end();
   } catch (err) {
     console.log(err);
     res.status(500).json({message: "Unable to login"});
@@ -104,11 +103,11 @@ export const changePassword = async (req: express.Request, res: express.Response
 
     const currUser = await UserModel.findOne({_id: userID}).select('+authentication.salt +authentication.password');;
     
-    if (authentication(currUser.authentication.salt, oldPassword) !== currUser.authentication.password){
+    if (authenticationCreate(currUser.authentication.salt, oldPassword) !== currUser.authentication.password){
       return res.status(400).json({message: "Not correct old password"});
     }
 
-    await UserModel.findOneAndUpdate({_id: userID}, {'authentication.password': authentication(currUser.authentication.salt, newPassword)});
+    await UserModel.findOneAndUpdate({_id: userID}, {'authentication.password': authenticationCreate(currUser.authentication.salt, newPassword)});
 
     return res.json({message: "success"}).end();
   } catch (err) {
