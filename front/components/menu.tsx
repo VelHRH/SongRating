@@ -10,15 +10,17 @@ const Menu = () => {
    <a
     href="/"
     className={`${
-     !pathname.includes("/users") && "bg-blue-900"
+     !pathname.includes("/users") &&
+     !pathname.includes("/artists") &&
+     "bg-blue-900"
     } w-full h-full hover:bg-blue-900 flex items-center rounded-l-3xl justify-center duration-300`}
    >
     songs
    </a>
    <a
-    href="/authors"
+    href="/artists"
     className={`${
-     pathname.includes("/authors") && "bg-blue-900"
+     pathname.includes("/artists") && "bg-blue-900"
     } w-full h-full hover:bg-blue-900 flex items-center justify-center duration-300`}
    >
     artists

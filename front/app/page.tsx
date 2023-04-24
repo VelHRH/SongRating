@@ -22,9 +22,6 @@ async function getData(token) {
 export default async function Home() {
  const session = await getServerSession(authOptions);
  const songs = await getData(session?.user?.sessionToken || "");
- if (songs.message) {
-  redirect("/users/login");
- }
  return (
   <main className={``}>
    {songs.map((song) => (
