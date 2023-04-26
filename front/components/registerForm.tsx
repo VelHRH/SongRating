@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 async function register(login, email, password) {
- const res = await fetch(`http://localhost:4444/user/register`, {
+ const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/user/register`, {
   method: "POST",
   headers: {
    "Content-Type": "application/json;charset=utf-8",
@@ -55,7 +55,7 @@ const RegisterForm = () => {
     type="submit"
     className="w-[50%] rounded-xl bg-blue-600 text-slate-950 font-bold py-2 border-2 duration-300 text-2xl border-blue-600 hover:bg-transparent hover:text-blue-600"
    >
-    Login
+    Register
    </button>
   </form>
  );

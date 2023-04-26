@@ -7,28 +7,34 @@ import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 async function rateSong(token, id, star) {
- const res = await fetch(`http://localhost:4444/song/rate/${id}`, {
-  method: "POST",
-  headers: {
-   "Content-Type": "application/json;charset=utf-8",
-   Authorization: `${token}`,
-  },
-  body: JSON.stringify({
-   star,
-  }),
- });
+ const res = await fetch(
+  `${process.env.NEXT_PUBLIC_API_HOST}/song/rate/${id}`,
+  {
+   method: "POST",
+   headers: {
+    "Content-Type": "application/json;charset=utf-8",
+    Authorization: `${token}`,
+   },
+   body: JSON.stringify({
+    star,
+   }),
+  }
+ );
  const data = res.json();
  return data;
 }
 
 async function deleteRating(token, id) {
- const res = await fetch(`http://localhost:4444/song/rate/${id}`, {
-  method: "DELETE",
-  headers: {
-   "Content-Type": "application/json;charset=utf-8",
-   Authorization: `${token}`,
-  },
- });
+ const res = await fetch(
+  `${process.env.NEXT_PUBLIC_API_HOST}/song/rate/${id}`,
+  {
+   method: "DELETE",
+   headers: {
+    "Content-Type": "application/json;charset=utf-8",
+    Authorization: `${token}`,
+   },
+  }
+ );
  const data = res.json();
  return data;
 }

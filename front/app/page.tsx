@@ -7,7 +7,7 @@ import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
 
 async function getData(token) {
- const res = await fetch(`${process.env.API_HOST}/song/getAll`, {
+ const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/song/getAll`, {
   method: "GET",
   headers: {
    "Content-Type": "application/json;charset=utf-8",

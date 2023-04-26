@@ -3,14 +3,17 @@ import ChangePassword from "@/components/changePassword";
 import Song from "@/components/song";
 import Link from "next/link";
 async function getSongs(_id: string) {
- const res = await fetch(`${process.env.API_HOST}/songs/findById/${_id}`, {
-  cache: "no-store",
- });
+ const res = await fetch(
+  `${process.env.NEXT_PUBLIC_API_HOST}/songs/findById/${_id}`,
+  {
+   cache: "no-store",
+  }
+ );
  return res.json();
 }
 
 async function getUser(_id: string) {
- const res = await fetch(`${process.env.API_HOST}/user/${_id}`, {
+ const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/user/${_id}`, {
   cache: "no-store",
  });
  return res.json();

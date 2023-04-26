@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 async function addSong(token, name, authors, url, mins, secs) {
- const res = await fetch(`http://localhost:4444/song/add`, {
+ const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/song/add`, {
   method: "POST",
   headers: {
    "Content-Type": "application/json;charset=utf-8",

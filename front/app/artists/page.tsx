@@ -5,7 +5,7 @@ import ArtistsComponent from "@/components/artists";
 import Link from "next/link";
 
 async function getData() {
- const res = await fetch(`${process.env.API_HOST}/artist/getAll`, {
+ const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/artist/getAll`, {
   cache: "no-store",
  });
  return res.json();

@@ -4,17 +4,20 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 async function changePassword(token, oldPassword, newPassword) {
- const res = await fetch(`http://localhost:4444/user/changePassword`, {
-  method: "PUT",
-  headers: {
-   "Content-Type": "application/json;charset=utf-8",
-   Authorization: `${token}`,
-  },
-  body: JSON.stringify({
-   oldPassword,
-   newPassword,
-  }),
- });
+ const res = await fetch(
+  `${process.env.NEXT_PUBLIC_API_HOST}/user/changePassword`,
+  {
+   method: "PUT",
+   headers: {
+    "Content-Type": "application/json;charset=utf-8",
+    Authorization: `${token}`,
+   },
+   body: JSON.stringify({
+    oldPassword,
+    newPassword,
+   }),
+  }
+ );
  const data = res.json();
  return data;
 }

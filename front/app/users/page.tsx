@@ -4,7 +4,7 @@ import Profile from "@/components/profile";
 import Link from "next/link";
 
 async function getData() {
- const res = await fetch(`${process.env.API_HOST}/user/getAll`, {
+ const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/user/getAll`, {
   cache: "no-store",
  });
  return res.json();
